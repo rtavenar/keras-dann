@@ -13,15 +13,19 @@ class DANN():
         self.label_model_ = Sequential([feature_extractor, label_predictor])
         self.domain_model_d_ = Sequential([feature_extractor, domain_classifier])
         self.domain_model_f_ = Sequential([feature_extractor, domain_classifier])
-        
+    
+    def compile(self, loss, optimizer, metrics=[]):
+        """
+        The loss, optimizer and metrics provided here are those to be used for the label predictor.
+        """
         self.label_model_.compile(
-            optimizer="Adam",
-            loss='binary_crossentropy', 
+            optimizer=optimizer,
+            loss=loss, 
             loss_weights=[1.], 
-            metrics=['accuracy']
+            metrics=metrics
         )
         
-        feature_extractor.trainable = False
+        self.feature_extractor.trainable = False
         self.domain_model_d_.compile(
             optimizer="Adam",
             loss='binary_crossentropy', 
@@ -29,8 +33,8 @@ class DANN():
             metrics=['accuracy']
         )
         
-        feature_extractor.trainable = True
-        domain_classifier.trainable = False
+        self.feature_extractor.trainable = True
+        self.domain_classifier.trainable = False
         self.domain_model_f_.compile(
             optimizer="Adam",
             loss='binary_crossentropy', 
