@@ -1,4 +1,4 @@
-from tensorflow.keras.models import Model, Sequential
+from tensorflow.keras.models import Sequential
 import numpy as np
 
 
