@@ -82,10 +82,8 @@ class DANN():
     def _str_stats(self, stats, preffix=""):
         if preffix != "" and not preffix.endswith("_"):
             preffix = preffix + "_"
-        s = ""
-        for k, v in stats.items():
-            s += f", {preffix}{k}: {v:.6f}"
-        return s
+        l = [f", {preffix}{k}: {v:.6f}" for k, v in stats.items()]
+        return "".join(l)
         
     def fit(self, tup_X, y, epochs=1, batch_size=32, verbose=2):
         X_source, X_target = tup_X
